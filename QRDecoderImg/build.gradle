@@ -8,28 +8,21 @@ java {
 }
 
 dependencies {
-    // ZXING para decodificación de QR
     implementation libs.core
     implementation libs.javase
-
-    // JSON para estructurar la respuesta
-    implementation libs.json
-
-    // Librerías de Kony Middleware (Cargadas desde la carpeta lib/)
-    implementation fileTree(dir: 'lib', include: ['*.jar'])
-
-    // Dependencias de Test
+    compileOnly libs.json
+    compileOnly fileTree(dir: 'lib', include: ['*.jar'])
     testImplementation libs.junit
+    testImplementation libs.json
 }
 
 test {
     useJUnit()
 }
 
-// Tarea para generar el Fat JAR (con todas las dependencias incluidas)
 tasks.register('fatJar', Jar) {
     group = 'build'
-    description = 'Genera un JAR ejecutable que contiene todas las dependencias.'
+    description = 'Genera un JAR con ZXing, excluyendo JSON y librerías de Kony.'
     
     archiveClassifier = 'all'
     
